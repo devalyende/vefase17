@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vistas Tree -->
+    <record id="view_fiscal_expenses" model="ir.ui.view">
+        <field name="name">view.check.list</field>
+        <field name="model">fiscal.expenses</field>
+        <field name="arch" type="xml">
+            <tree string="Gastos Fiscales" name="Gastos" editable="top">
+                <field name="name" required="1"/>
+                <field name="account_ids" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_financial_expenses" model="ir.ui.view">
+        <field name="name">view.check.list</field>
+        <field name="model">financial.expenses</field>
+        <field name="arch" type="xml">
+            <tree string="Gastos Financieros" name="Gastos" editable="top">
+                <field name="name" required="1"/>
+                <field name="account_ids" />
+            </tree>
+        </field>
+    </record>
+    <!-- Fin de las Vistas Tree -->
+
+    <!-- Action -->
+    <record id="action_fiscal_expenses" model="ir.actions.act_window">
+        <field name="name">Fiscal</field>
+        <field name="res_model">fiscal.expenses</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Cree un nuevo Gasto Fiscal
+              </p>
+        </field>
+    </record>
+
+    <record id="action_financial_expenses" model="ir.actions.act_window">
+        <field name="name">Financiero</field>
+        <field name="res_model">financial.expenses</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Cree un nuevo Gasto Financiero
+              </p>
+        </field>
+    </record>
+    <!-- Fin de las Action -->
+
+    <!-- Menus de las Vistas -->
+    <menuitem name="Gastos Adicionales"
+              id="expenses_ids"
+              parent="conf_id"
+              sequence="6"/>
+
+    <menuitem name="Fiscales"
+              id="fiscal_id"
+              parent="expenses_ids"
+              action="action_fiscal_expenses"
+              sequence="6"/>    
+
+    <menuitem name="Financieros"
+              id="financial_id"
+              parent="expenses_ids"
+              action="action_financial_expenses"
+              sequence="6"/>   
+    <!-- Fin de los Menus -->
+</odoo>

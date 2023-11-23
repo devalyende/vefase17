@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_imports_vefase_user,imports.vefase.user,model_imports_vefase,base.group_user,1,1,1,1
+access_company_aereal_user,company.aereal.user,model_company_aereal,base.group_user,1,1,1,1
+access_company_nautical_user,company.nautical.user,model_company_nautical,base.group_user,1,1,1,1
+access_container_lines_user,container.lines.user,model_container_lines,base.group_user,1,1,1,1
+access_size_parameter_user,size.parameter.user,model_size_parameter,base.group_user,1,1,1,1
+access_container_product_lines_user,container.product.lines.user,model_container_product_lines,base.group_user,1,1,1,1
+access_imports_vefase_lines_user,imports.vefase.lines.user,model_imports_vefase_lines,base.group_user,1,1,1,1
+access_check_list_user,check.list.user,model_check_list,base.group_user,1,1,1,1
+access_fiscal_expenses_user,fiscal.expenses.user,model_fiscal_expenses,base.group_user,1,1,1,1
+access_financial_expenses_user,financial.expenses.user,model_financial_expenses,base.group_user,1,1,1,1
+access_check_list_lines_user,check.list.lines.user,model_check_list_lines,base.group_user,1,1,1,1
+access_container_fiscal_lines_user,container.fiscal.lines.user,model_container_fiscal_lines,base.group_user,1,1,1,1
+access_container_financial_lines_user,container.financial.lines.user,model_container_financial_lines,base.group_user,1,1,1,1
+access_loading_unloading_user,loading.unloading.lines.user,model_loading_unloading,base.group_user,1,1,1,1

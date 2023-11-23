@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Vistas Tree -->
+    <record id="company_aereal_view_list" model="ir.ui.view">
+        <field name="name">company.aereal.view.list</field>
+        <field name="model">company.aereal</field>
+        <field name="arch" type="xml">
+            <tree string="Compañías" name="Compañías" editable="top">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="company_nautical_view_list" model="ir.ui.view">
+        <field name="name">company.nautical.view.list</field>
+        <field name="model">company.nautical</field>
+        <field name="arch" type="xml">
+            <tree string="Compañías" name="Compañías" editable="top">
+                <field name="name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="loading_unloading_view_list" model="ir.ui.view">
+        <field name="name">loading.unloading.view.list</field>
+        <field name="model">loading.unloading</field>
+        <field name="arch" type="xml">
+            <tree string="Puertos" name="Puertos" editable="top">
+                <field name="dock_name" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <!-- Fin de las Vistas Tree -->
+
+    <!-- Action -->
+    <record id="action_company_aereal_form" model="ir.actions.act_window">
+        <field name="name">Compañía</field>
+        <field name="res_model">company.aereal</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Crear una nueva Compañía
+              </p>
+        </field>
+    </record>
+
+    <record id="action_company_nautical_form" model="ir.actions.act_window">
+        <field name="name">Compañía</field>
+        <field name="res_model">company.nautical</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Crear una nueva Compañía
+              </p>
+        </field>
+    </record>
+
+    <record id="action_loading_unloading_form" model="ir.actions.act_window">
+        <field name="name">Puerto</field>
+        <field name="res_model">loading.unloading</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo Puerto
+              </p>
+        </field>
+    </record>
+
+    <!-- Fin de las Action -->
+
+    <!-- Menus de las Vistas -->
+
+    <menuitem name="Configuraciones"
+              id="conf_id"
+              parent="imports_vefase"
+              sequence="9"/>
+
+    <menuitem name="Compañías"
+              id="company_id"
+              parent="conf_id"
+              sequence="4"/>
+
+    <menuitem name="Puertos"
+              id="dock_ids"
+              parent="conf_id"
+              sequence="5"/>
+
+    <menuitem name="Aereas"
+              id="company_aereal"
+              parent="company_id"
+              action="action_company_aereal_form"
+              sequence="4"/>
+
+    <menuitem name="Nauticas"
+              id="company_nautical"
+              parent="company_id"
+              action="action_company_nautical_form"
+              sequence="4"/>
+
+    <menuitem name="Puertos"
+              id="dock_id"
+              parent="dock_ids"
+              action="action_loading_unloading_form"
+              sequence="4"/>
+
+    <!-- Fin de los Menus -->
+</odoo>

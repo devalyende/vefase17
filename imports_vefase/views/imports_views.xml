@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="imports_vefase_form" model="ir.ui.view">
+        <field name="name">imports.vefase.form</field>
+        <field name="model">imports.vefase</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="stage" widget="statusbar" />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <span>Número de Bill of Landing</span>
+                        </h1>
+                        <h2>
+                            <field name="bl_code"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="country_id"/>
+                            <field name="origin_city"/>
+                            <field name="destiny_country_id"/>
+                            <field name="destiny_city"/>
+                            <field name="import_type"/>
+                            <field name="aereal_id" invisible="import_type != 'aereo'"/>
+                            <field name="nautical_id" invisible="import_type != 'maritimo'"/>
+                            <field name="delivery_number" invisible="import_type != 'aereo'"/>
+                        </group>
+                        <group>
+                            <field name="loading_port"/>
+                            <field name="discharge_port"/>
+                            <field name="current_location"/>
+                            <field name="estimated_date"/>
+                            <field name="limit_pay_date"/>
+                            <field name="balance"/>
+                        </group>
+                        <notebook>
+                            <page string="Contenedores">
+                                <field name="container_ids">
+                                    <tree editable="bottom" create="1" >
+                                        <field name="containers_id"/>
+                                        <field name="total_price"/>
+                                        <field name="total_currency"/>
+                                        <field name="total_fiscal" string="T. Fiscal"/>
+                                        <field name="total_fiscal_rate" string="T. Fiscal $"/>
+                                        <field name="total_financial" string="T. Financiero"/>
+                                        <field name="total_financial_rate" string="T. Financiero $"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Checklist">
+                                <field name="checklist_ids">
+                                    <tree editable="bottom" create="1" >
+                                        <field name="checklist_id"/>
+                                        <field name="status"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notas Adicionales">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_imports_vefase_list" model="ir.ui.view">
+        <field name="name">view.imports.vefase.list</field>
+        <field name="model">imports.vefase</field>
+        <field name="arch" type="xml">
+            <tree string="Importaciones" name="Importaciones" >
+                <!-- <field name="bl_code" required="1"/> -->
+                <field name="bl_code"/>
+                <field name="partner_id"/>
+                <field name="estimated_date" widget="remaining_days"/>
+                <field name="limit_pay_date" widget="remaining_days"/>
+                <field name="balance"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="imports_vefase_kanban_view" model="ir.ui.view">
+            <field name="name">imports.vefase.kanban</field>
+            <field name="model">imports.vefase</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage" class="o_kanban_mobile" sample="1">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <strong><field name="bl_code"/></strong>
+                                </div>
+                                <div>
+                                    <span><field name="description"/></span>
+                                </div>
+                            </div>
+                            <!-- &nbsp; -->
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+    </record>
+
+    <record id="action_imports_vefase_form" model="ir.actions.act_window">
+        <field name="name">Importaciones</field>
+        <field name="res_model">imports.vefase</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Crear nueva importacion
+              </p>
+        </field>
+    </record>
+    
+    <menuitem name="Importes"
+              id="imports_vefase"
+              sequence="2"
+              web_icon="imports_vefase,static/description/icon.png"/>
+
+    <menuitem name="Bill of Lading"
+              id="bl_id"
+              parent="imports_vefase"
+              sequence="3"/>
+
+    <menuitem name="Importaciones"
+              id="imports_ids"
+              parent="bl_id"
+              action="action_imports_vefase_form"
+              sequence="3"/>
+
+
+</odoo>

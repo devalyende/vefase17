@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="container_form" model="ir.ui.view">
+        <field name="name">container.form</field>
+        <field name="model">container.lines</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1 class="d-flex">
+                            <span>Número del Contenedor</span>
+                        </h1>
+                        <h2>
+                            <field name="container_code"/>
+                        </h2>
+                        
+
+                    </div>
+                    <group>
+                        <group>
+                            <field name="size_id"/>
+                            <field name="status" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="rate"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Productos del Contenedor">
+                            <field name="products_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="products_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="piece_type"/>
+                                    <field name="unit_price"/>
+                                    <field name="currency_unit_price"/>
+                                    <field name="total_price"/>
+                                    <field name="total_currency"/>
+                                </tree>
+                            </field>
+                            <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_price"/>
+                                </div>
+                                <field name="total_price" nolabel="1" class="oe_subtotal_footer_separator"
+                                        widget="monetary" />
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_currency"/>
+                                </div>
+                                <field name="total_currency" nolabel="1" class="oe_subtotal_footer_separator"
+                                        widget="monetary" />
+                            </group>    
+                        </page>
+                        <page string="Costos Adicionales">
+                            <notebook>
+                                <page string="Costos Fiscales">
+                                    <field name="fiscal_ids" mode="tree">
+                                        <tree editable="bottom">
+                                            <field name="products_id"/>
+                                            <field name="unit_price"/>
+                                            <field name="currency_unit_price"/>
+                                        </tree>
+                                    </field>
+                                    <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="total_price_fiscal"/>
+                                        </div>
+                                        <field name="total_price_fiscal" nolabel="1" class="oe_subtotal_footer_separator"
+                                                widget="monetary" />
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="total_currency_fiscal"/>
+                                        </div>
+                                        <field name="total_currency_fiscal" nolabel="1" class="oe_subtotal_footer_separator"
+                                                widget="monetary" />
+                                    </group>
+                                </page>
+                                <page string="Costos Financieros">
+                                    <field name="financial_ids" mode="tree">
+                                        <tree editable="bottom">
+                                            <field name="products_id"/>
+                                            <field name="unit_price"/>
+                                            <field name="currency_unit_price"/>
+                                        </tree>
+                                    </field>
+                                    <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="total_price_financial"/>
+                                        </div>
+                                        <field name="total_price_financial" nolabel="1" class="oe_subtotal_footer_separator"
+                                                widget="monetary" />
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="total_currency_financial"/>
+                                        </div>
+                                        <field name="total_currency_financial" nolabel="1" class="oe_subtotal_footer_separator"
+                                                widget="monetary" />
+                                    </group>
+                                </page>
+                            </notebook>
+                        </page>
+
+                        <page string="Anexos">
+                            <notebook>
+                                <page string="Compra, Transporte e Importacion">
+                                    <field name="attached_file_a" widget="many2many_binary"/>
+                                </page>
+                                <page string="Nacionalizacion">
+                                    <field name="attached_file_b" widget="many2many_binary"/>
+                                </page>
+                                <page string="Flete Terrestre">
+                                    <field name="attached_file_c" widget="many2many_binary"/>
+                                </page>
+                            </notebook>
+                        </page>
+                    </notebook>
+                    
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_container_list" model="ir.ui.view">
+        <field name="name">view.container.list</field>
+        <field name="model">container.lines</field>
+        <field name="arch" type="xml">
+            <tree string="Contenedores" name="Contenedores" >
+                <!-- <field name="bl_code" required="1"/> -->
+                <field name="container_code"/>
+                <field name="size_id"/>
+                <field name="total_price"/>
+                <field name="total_currency"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="container_kanban_view" model="ir.ui.view">
+            <field name="name">container.kanban</field>
+            <field name="model">container.lines</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <strong><field name="container_code"/></strong>
+                                </div>
+                            </div>
+                            <!-- &nbsp; -->
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+    </record>
+
+    <record id="action_container_form" model="ir.actions.act_window">
+        <field name="name">Contenedores</field>
+        <field name="res_model">container.lines</field>
+        <field name="view_mode">tree,form,kanban,activity</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear un nuevo Contenedor
+            </p>
+        </field>
+    </record>
+    
+    <menuitem name="Contenedores"
+              id="container_id"
+              parent="imports_vefase"
+              sequence="5"/>
+
+    <menuitem name="Lista de Contenedores"
+              id="containers_id"
+              parent="container_id"
+              action="action_container_form"
+              sequence="5"/>
+
+    <menuitem name="Productos"
+              id="product_id"
+              parent="container_id"
+              action="product.product_template_action"
+              sequence="5"/>
+
+</odoo>

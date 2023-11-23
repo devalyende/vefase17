@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <!-- Vistas Tree -->
+    <record id="size_view_list" model="ir.ui.view">
+        <field name="name">size.view.list</field>
+        <field name="model">size.parameter</field>
+        <field name="arch" type="xml">
+            <tree string="Medidas" name="Medidas" editable="top">
+                <field name="size" required="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Fin de las Vistas Tree -->
+
+    <!-- Action -->
+    <record id="action_size_form" model="ir.actions.act_window">
+        <field name="name">Medidas</field>
+        <field name="res_model">size.parameter</field>
+        <field name="view_mode">tree</field>
+        <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Crear una nueva Medida
+              </p>
+        </field>
+    </record>
+
+    <!-- Fin de las Action -->
+
+    <!-- Menus de las Vistas -->
+
+    <menuitem name="Medidas"
+              id="size_ids"
+              parent="conf_id"
+              sequence="5"/>
+
+    <menuitem name="Medidas"
+              id="size_id"
+              parent="size_ids"
+              action="action_size_form"
+              sequence="5"/>
+
+    <!-- Fin de los Menus -->
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="imports_partner_view" model="ir.ui.view">
+        <field name="name">imports.partner.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_type']" position="after">
+                <label for="international_type"/>
+                <field name="international_type"  widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

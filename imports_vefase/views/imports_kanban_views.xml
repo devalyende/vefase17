@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="imports_kanban_view" model="ir.ui.view">
+            <field name="name">imports.kanban</field>
+            <field name="model">imports.vefase</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage" create="True" sample="1">
+                    <field name="bl_code" />
+                    <field name="description" />
+                    <field name="import_type"/>
+                    <field name="partner_id"/>
+                    <field name="estimated_date"/>
+                    <field name="aereal_id"/>
+                    <field name="nautical_id"/>
+                    <field name="checklist_ids"/>
+                    <field name="todo_check"/>
+                    <progressbar field="stage" colors='{"complete": "success", "new": "warning", "in_process": "info","cancel": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div>
+                                    <label for="estimated_date">BL:</label>
+                                    <br/>
+                                    <strong><field name="bl_code"/></strong>
+                                </div>
+                                <div>
+                                    <span><field name="description"/></span>
+                                </div>
+                                <div t-attf-class="oe_kanban_details">
+                                    <ul>
+                                        <li>
+                                            <label for="estimated_date">Proveedor:</label>
+                                            <br/>
+                                            <field name="partner_id"/>
+                                        </li>
+                                        <li>
+                                            <label for="estimated_date">Medio de Importación:</label>
+                                            <br/>
+                                            <field name="import_type"/>
+                                        </li>
+                                        <li>
+                                            <label for="estimated_date">Fecha Estimada:</label>
+                                            <br/>
+                                            <field name="estimated_date"/>
+                                        </li>
+                                        <li>
+                                            <label for="aereal_id" invisible="import_type != 'aereo'">Compañía Responsable:</label>
+                                            <br/>
+                                            <field name="aereal_id" invisible="import_type != 'aereo'"/>
+                                        </li>
+                                        <li>
+                                            <label for="nautical_id" invisible="import_type != 'maritimo'">Compañía Responsable:</label>
+                                            <br/>
+                                            <field name="nautical_id" invisible="import_type != 'maritimo'"/>
+                                        </li>
+                                        <li>
+                                            <label for="todo_name">Tarea Pendiente mas Reciente:</label>
+                                            <br/>
+                                            <field name="todo_name"/>
+                                        </li>
+                                        <li>
+                                            <field name="todo_check"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <field name="priority" widget="priority"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+    </record>
+
+
+    <record id="action_imports_kanban_form" model="ir.actions.act_window">
+        <field name="name">Importaciones</field>
+        <field name="res_model">imports.vefase</field>
+        <field name="view_mode">kanban,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Crear nueva importacion
+            </p>
+        </field>
+    </record>
+
+    <menuitem name="Planificacion"
+            id="kanban_id"
+            parent="imports_vefase"
+            action="action_imports_kanban_form"
+            sequence="4"/>
+
+</odoo>
