@@ -32,7 +32,6 @@
                                 <tree editable="bottom">
                                     <field name="products_id"/>
                                     <field name="product_qty"/>
-                                    <field name="piece_type"/>
                                     <field name="unit_price"/>
                                     <field name="currency_unit_price"/>
                                     <field name="total_price"/>
@@ -53,55 +52,50 @@
                                         widget="monetary" />
                             </group>    
                         </page>
-                        <page string="Costos Adicionales">
-                            <notebook>
-                                <page string="Costos Fiscales">
-                                    <field name="fiscal_ids" mode="tree">
-                                        <tree editable="bottom">
-                                            <field name="products_id"/>
-                                            <field name="unit_price"/>
-                                            <field name="currency_unit_price"/>
-                                        </tree>
-                                    </field>
-                                    <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
-                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
-                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                            <label for="total_price_fiscal"/>
-                                        </div>
-                                        <field name="total_price_fiscal" nolabel="1" class="oe_subtotal_footer_separator"
-                                                widget="monetary" />
-                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                            <label for="total_currency_fiscal"/>
-                                        </div>
-                                        <field name="total_currency_fiscal" nolabel="1" class="oe_subtotal_footer_separator"
-                                                widget="monetary" />
-                                    </group>
-                                </page>
-                                <page string="Costos Financieros">
-                                    <field name="financial_ids" mode="tree">
-                                        <tree editable="bottom">
-                                            <field name="products_id"/>
-                                            <field name="unit_price"/>
-                                            <field name="currency_unit_price"/>
-                                        </tree>
-                                    </field>
-                                    <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
-                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
-                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                            <label for="total_price_financial"/>
-                                        </div>
-                                        <field name="total_price_financial" nolabel="1" class="oe_subtotal_footer_separator"
-                                                widget="monetary" />
-                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                            <label for="total_currency_financial"/>
-                                        </div>
-                                        <field name="total_currency_financial" nolabel="1" class="oe_subtotal_footer_separator"
-                                                widget="monetary" />
-                                    </group>
-                                </page>
-                            </notebook>
+                        <page string="Costos Fiscales">
+                            <field name="fiscal_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="products_id"/>
+                                    <field name="unit_price"/>
+                                    <field name="currency_unit_price"/>
+                                </tree>
+                            </field>
+                            <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_price_fiscal"/>
+                                </div>
+                                <field name="total_price_fiscal" nolabel="1" class="oe_subtotal_footer_separator"
+                                        widget="monetary" />
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_currency_fiscal"/>
+                                </div>
+                                <field name="total_currency_fiscal" nolabel="1" class="oe_subtotal_footer_separator"
+                                        widget="monetary" />
+                            </group>
                         </page>
-
+                        <page string="Costos Financieros">
+                            <field name="financial_ids" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="products_id"/>
+                                    <field name="unit_price"/>
+                                    <field name="currency_unit_price"/>
+                                </tree>
+                            </field>
+                            <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_price_financial"/>
+                                </div>
+                                <field name="total_price_financial" nolabel="1" class="oe_subtotal_footer_separator"
+                                        widget="monetary" />
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="total_currency_financial"/>
+                                </div>
+                                <field name="total_currency_financial" nolabel="1" class="oe_subtotal_footer_separator"
+                                        widget="monetary" />
+                            </group>
+                        </page>
                         <page string="Anexos">
                             <notebook>
                                 <page string="Compra, Transporte e Importacion">
@@ -118,6 +112,10 @@
                     </notebook>
                     
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'always'}"/>
+                </div>
             </form>
         </field>
     </record>
@@ -158,7 +156,7 @@
     <record id="action_container_form" model="ir.actions.act_window">
         <field name="name">Contenedores</field>
         <field name="res_model">container.lines</field>
-        <field name="view_mode">tree,form,kanban,activity</field>
+        <field name="view_mode">tree,form,kanban</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Crear un nuevo Contenedor

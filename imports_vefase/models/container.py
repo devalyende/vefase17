@@ -3,31 +3,32 @@ from odoo import models, fields, api
 
 class Container(models.Model):
     _name = 'container.lines'
+    _inherit = ['mail.thread']
     _description = 'Contenedores'
     _rec_name = 'container_code'
 
-    container_code = fields.Char(string='Numero del Contenedor', required=True)
-    attached_file_a = fields.Many2many('ir.attachment', 'file_a_att', 'product_id', 'attachment_id', string='Adjuntar')
-    attached_file_b = fields.Many2many('ir.attachment', 'file_b_att', 'product_id', 'attachment_id', string='Adjuntar')
-    attached_file_c = fields.Many2many('ir.attachment', 'file_c_att', 'product_id', 'attachment_id', string='Adjuntar')
+    container_code = fields.Char(string='Numero del Contenedor', required=True, tracking=True)
+    attached_file_a = fields.Many2many('ir.attachment', 'file_a_att', 'product_id', 'attachment_id', string='Adjuntar', tracking=True)
+    attached_file_b = fields.Many2many('ir.attachment', 'file_b_att', 'product_id', 'attachment_id', string='Adjuntar', tracking=True)
+    attached_file_c = fields.Many2many('ir.attachment', 'file_c_att', 'product_id', 'attachment_id', string='Adjuntar', tracking=True)
 
     size_id = fields.Many2one(
                 'size.parameter',
                 string='Medidas',
-                help='Selecione una medida para el contenedor'
+                help='Selecione una medida para el contenedor',
+                tracking=True
     )
-    products_ids = fields.One2many('container.product.lines', 'product_id', string='Productos de Importación')
-    fiscal_ids = fields.One2many('container.fiscal.lines', 'product_id', string='Gastos Fiscales')
-    financial_ids = fields.One2many('container.financial.lines', 'product_id', string='Gastos Financieros')
-    total_price = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True)
-    total_currency = fields.Float(string='Total $', compute='_compute_total_general', store=True)
-    rate = fields.Float(string='Tasa')
-    total_price_fiscal = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True)
-    total_currency_fiscal = fields.Float(string='Total $', compute='_compute_total_general', store=True)
-    total_price_financial = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True)
-    total_currency_financial = fields.Float(string='Total $', compute='_compute_total_general', store=True)
-    status = fields.Boolean("Disponibilidad", default= False)
-
+    products_ids = fields.One2many('container.product.lines', 'product_id', string='Productos de Importación', tracking=True)
+    fiscal_ids = fields.One2many('container.fiscal.lines', 'product_id', string='Gastos Fiscales', tracking=True)
+    financial_ids = fields.One2many('container.financial.lines', 'product_id', string='Gastos Financieros', tracking=True)
+    total_price = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True, tracking=True)
+    total_currency = fields.Float(string='Total $', compute='_compute_total_general', store=True, tracking=True)
+    rate = fields.Float(string='Tasa', tracking=True)
+    total_price_fiscal = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True, tracking=True)
+    total_currency_fiscal = fields.Float(string='Total $', compute='_compute_total_general', store=True, tracking=True)
+    total_price_financial = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True, tracking=True)
+    total_currency_financial = fields.Float(string='Total $', compute='_compute_total_general', store=True, tracking=True)
+    status = fields.Boolean("Disponibilidad", default=False, tracking=True)
 
     @api.depends('products_ids.total_price', 'products_ids.total_currency',
                 'fiscal_ids.unit_price', 'fiscal_ids.currency_unit_price',
@@ -66,12 +67,6 @@ class ContainerLines(models.Model):
     product_qty = fields.Integer(string='Cantidad')
     unit_price = fields.Float(string='Precio en Bs.')
     currency_unit_price = fields.Float(string='Precio en $', compute="_compute_currency_unit_price")
-    piece_type = fields.Selection(
-                [('null', ''), ('ensamblaje', 'Nueva'), ('repuesto', 'Repuesto')],
-                string='Tipo de Pieza',
-                default='null',
-                help='Seleccione el tipo de pieza, si sera nueva para ensamblaje o de repuesto'
-    )
     products_id = fields.Many2one(
                 'product.template',
                 string='Producto',

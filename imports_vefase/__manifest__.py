@@ -7,6 +7,7 @@
     'version': '17.0.0.0.0',
     'license': 'LGPL-3',
     'depends': ['base',
+                'mail',
                 'account_accountant',
                 'contacts',
                 'stock'],

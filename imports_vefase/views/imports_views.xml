@@ -66,6 +66,10 @@
                         </notebook>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids" options="{'post_refresh': 'always'}"/>
+                </div>
             </form>
         </field>
     </record>
