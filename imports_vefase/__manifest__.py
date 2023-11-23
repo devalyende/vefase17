@@ -8,10 +8,11 @@
     'license': 'LGPL-3',
     'depends': ['base',
                 'mail',
-                'account_accountant',
+                'account',
                 'contacts',
                 'stock'],
     'data': [
+        # 'data/data.xml',
         'security/ir.model.access.csv',
         'views/imports_views.xml',
         'views/res_partner_views.xml',
