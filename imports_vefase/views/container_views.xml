@@ -125,12 +125,13 @@
         <field name="model">container.lines</field>
         <field name="arch" type="xml">
             <tree string="Contenedores" name="Contenedores" >
-                <!-- <field name="bl_code" required="1"/> -->
                 <field name="container_code"/>
+                <field name="bl_code" decoration-danger="1"/>
                 <field name="size_id"/>
                 <field name="total_price"/>
                 <field name="total_currency"/>
             </tree>
+            
         </field>
     </record>
 

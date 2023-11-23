@@ -11,7 +11,7 @@ class Container(models.Model):
     attached_file_a = fields.Many2many('ir.attachment', 'file_a_att', 'product_id', 'attachment_id', string='Adjuntar', tracking=True)
     attached_file_b = fields.Many2many('ir.attachment', 'file_b_att', 'product_id', 'attachment_id', string='Adjuntar', tracking=True)
     attached_file_c = fields.Many2many('ir.attachment', 'file_c_att', 'product_id', 'attachment_id', string='Adjuntar', tracking=True)
-
+    bl_code = fields.Char(string='Numero de BL', tracking=True)
     size_id = fields.Many2one(
                 'size.parameter',
                 string='Medidas',
