@@ -20,8 +20,7 @@
                         <t t-name="kanban-box">
                             <div t-attf-class="oe_kanban_global_click">
                                 <div>
-                                    <label for="estimated_date">BL:</label>
-                                    <br/>
+                                    <label for="estimated_date">BL:  </label>
                                     <strong><field name="bl_code"/></strong>
                                 </div>
                                 <div>
@@ -31,32 +30,26 @@
                                     <ul>
                                         <li>
                                             <label for="estimated_date">Proveedor:</label>
-                                            <br/>
                                             <field name="partner_id"/>
                                         </li>
                                         <li>
                                             <label for="estimated_date">Medio de Importación:</label>
-                                            <br/>
                                             <field name="import_type"/>
                                         </li>
                                         <li>
-                                            <label for="estimated_date">Fecha Estimada:</label>
-                                            <br/>
+                                            <label for="estimated_date">Fecha Estimada:  </label>
                                             <field name="estimated_date"/>
                                         </li>
                                         <li>
-                                            <label for="aereal_id" invisible="import_type != 'aereo'">Compañía Responsable:</label>
-                                            <br/>
+                                            <label for="aereal_id" invisible="import_type != 'aereo'">Compañía Responsable:  </label>
                                             <field name="aereal_id" invisible="import_type != 'aereo'"/>
                                         </li>
                                         <li>
-                                            <label for="nautical_id" invisible="import_type != 'maritimo'">Compañía Responsable:</label>
-                                            <br/>
+                                            <label for="nautical_id" invisible="import_type != 'maritimo'">Compañía Responsable:  </label>
                                             <field name="nautical_id" invisible="import_type != 'maritimo'"/>
                                         </li>
                                         <li>
-                                            <label for="todo_name">Tarea Pendiente mas Reciente:</label>
-                                            <br/>
+                                            <label for="todo_name">Tarea Pendiente mas Reciente:  </label>
                                             <field name="todo_name"/>
                                         </li>
                                         <li>
@@ -71,7 +64,6 @@
                 </kanban>
             </field>
     </record>
-
 
     <record id="action_imports_kanban_form" model="ir.actions.act_window">
         <field name="name">Importaciones</field>

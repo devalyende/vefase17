@@ -55,6 +55,13 @@ class ImportsVefase(models.Model):
     checklist_ids = fields.One2many('check.list.lines', 'container_id', tracking=True)
     todo_check = fields.Char(string="Tareas Pendiente", compute="_compute_todo", tracking=True)
     todo_name = fields.Char(string="Ultima Tarea", compute="_compute_todo_name", tracking=True)
+    account_ids = fields.Many2one('account.account', string='Cuenta Asociada')
+    currency_id = fields.Many2one('res.currency', string="Moneda", 
+                                    default=lambda self: self.env.ref('base.VEF'), readonly=1)
+    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
+                                    default=lambda self: self.env.ref('base.USD'), readonly=1)
+    total_import = fields.Float(string="Total en Bs.", compute="_compute_total_import")
+    total_import_rate = fields.Float(string="Total en $", compute="_compute_total_import")
 
     def _expand_stages(self, states, domain, order):
         # return all stages
@@ -83,11 +90,14 @@ class ImportsVefase(models.Model):
                 rec.todo_name = lines[-1].checklist_id.name
 
     @api.depends('container_ids')
-    def _compute_total_balance(self):
-        balance = 0
+    def _compute_total_import(self):
+        total_import = 0
+        total_import_rate = 0
         for rec in self.container_ids:
-            balance += rec.total_price + rec.total_fiscal + rec.total_financial
-        self.balance = balance
+            total_import += rec.total_price + rec.total_fiscal + rec.total_financial
+            total_import_rate += rec.total_currency + rec.total_fiscal_rate + rec.total_financial_rate
+        self.total_import = total_import
+        self.total_import_rate = total_import_rate
 
 
 class ImportsLines(models.Model):
@@ -95,6 +105,10 @@ class ImportsLines(models.Model):
     _description = 'Contenedores de la Importacion'
     _rec_name = 'container_id'
 
+    currency_id = fields.Many2one('res.currency', string="Moneda", 
+                                    default=lambda self: self.env.ref('base.VEF'), readonly=1)
+    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
+                                    default=lambda self: self.env.ref('base.USD'), readonly=1)
     containers_id = fields.Many2one('container.lines', string='Contenedor',
                                     domain=[('status', '=', False)])
     container_id = fields.Many2one('imports.vefase')
@@ -110,12 +124,15 @@ class ImportsLines(models.Model):
         record = super().create(vals)
         if record.containers_id:
             record.containers_id.write({'status': True})
+            record.containers_id.write({'bl_code': record.container_id.bl_code})
         return record
 
     def unlink(self):
         for record in self:
+            bl_code = ''
             if record.containers_id:
                 record.containers_id.write({'status': False})
+                record.containers_id.write({'bl_code': bl_code})
         return super().unlink()
 
 class ChecklistLines(models.Model):
