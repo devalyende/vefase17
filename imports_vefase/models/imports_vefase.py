@@ -47,7 +47,6 @@ class ImportsVefase(models.Model):
     nautical_id = fields.Many2one('company.nautical', string='Compañía Responsable', tracking=True)
     estimated_date = fields.Date(string='Fecha de Llegada', tracking=True)
     limit_pay_date = fields.Date(string='Fecha Limite de Pago', tracking=True)
-    balance = fields.Float(string='Saldo', compute='_compute_total_balance', tracking=True)
     delivery_date = fields.Date(string='Fecha de Entrega', tracking=True)
     delivery_number = fields.Char(string='Numero de Guia', tracking=True)
     container_ids = fields.One2many('imports.vefase.lines', 'container_id', string='Nombre', tracking=True)
