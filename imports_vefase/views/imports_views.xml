@@ -36,19 +36,23 @@
                             <field name="current_location"/>
                             <field name="estimated_date"/>
                             <field name="limit_pay_date"/>
-                            <field name="balance"/>
+                            <field name="account_ids"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="currency_id2" invisible="1"/>
                         </group>
                         <notebook>
                             <page string="Contenedores">
                                 <field name="container_ids">
                                     <tree editable="bottom" create="1" >
                                         <field name="containers_id"/>
-                                        <field name="total_price"/>
-                                        <field name="total_currency"/>
-                                        <field name="total_fiscal" string="T. Fiscal"/>
-                                        <field name="total_fiscal_rate" string="T. Fiscal $"/>
-                                        <field name="total_financial" string="T. Financiero"/>
-                                        <field name="total_financial_rate" string="T. Financiero $"/>
+                                        <field name="currency_id" column_invisible="1"/>
+                                        <field name="currency_id2" column_invisible="1"/>
+                                        <field name="total_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                        <field name="total_currency" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
+                                        <field name="total_fiscal" string="T. Fiscal" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                        <field name="total_fiscal_rate" string="T. Fiscal $" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
+                                        <field name="total_financial" string="T. Financiero" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                        <field name="total_financial_rate" string="T. Financiero $" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
                                     </tree>
                                 </field>
                             </page>
@@ -65,6 +69,18 @@
                             </page>
                         </notebook>
                     </group>
+                    <group class="oe_subtotal_footer oe_right" colspan="2" name="Totales">
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="total_import"/>
+                        </div>
+                        <field name="total_import" nolabel="1" class="oe_subtotal_footer_separator"
+                                widget="monetary" />
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="total_import_rate"/>
+                        </div>
+                        <field name="total_import_rate" nolabel="1" class="oe_subtotal_footer_separator"
+                                widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}" />
+                    </group>   
                 </sheet>
                 <div class="oe_chatter">
                     <field name="message_follower_ids"/>

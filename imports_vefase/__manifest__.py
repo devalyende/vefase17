@@ -12,7 +12,7 @@
                 'contacts',
                 'stock'],
     'data': [
-        # 'data/data.xml',
+        'data/data.xml',
         'security/ir.model.access.csv',
         'views/imports_views.xml',
         'views/res_partner_views.xml',

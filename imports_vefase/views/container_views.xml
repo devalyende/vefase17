@@ -23,7 +23,9 @@
                             <field name="status" invisible="1"/>
                         </group>
                         <group>
-                            <field name="rate"/>
+                            <field name="rate" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}" />
+                            <field name="currency_id" invisible="1"/>
+                            <field name="currency_id2" invisible="1"/>
                         </group>
                     </group>
                     <notebook>
@@ -32,10 +34,12 @@
                                 <tree editable="bottom">
                                     <field name="products_id"/>
                                     <field name="product_qty"/>
-                                    <field name="unit_price"/>
-                                    <field name="currency_unit_price"/>
-                                    <field name="total_price"/>
-                                    <field name="total_currency"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="currency_id2" column_invisible="1"/>
+                                    <field name="unit_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    <field name="currency_unit_price" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
+                                    <field name="total_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    <field name="total_currency" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
                                 </tree>
                             </field>
                             <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
@@ -49,15 +53,18 @@
                                     <label for="total_currency"/>
                                 </div>
                                 <field name="total_currency" nolabel="1" class="oe_subtotal_footer_separator"
-                                        widget="monetary" />
+                                        widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}" />
                             </group>    
                         </page>
                         <page string="Costos Fiscales">
                             <field name="fiscal_ids" mode="tree">
                                 <tree editable="bottom">
                                     <field name="products_id"/>
-                                    <field name="unit_price"/>
-                                    <field name="currency_unit_price"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="currency_id2" column_invisible="1"/>
+                                    <field name="fiscal_rate" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    <field name="unit_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    <field name="currency_unit_price" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
                                 </tree>
                             </field>
                             <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
@@ -71,15 +78,18 @@
                                     <label for="total_currency_fiscal"/>
                                 </div>
                                 <field name="total_currency_fiscal" nolabel="1" class="oe_subtotal_footer_separator"
-                                        widget="monetary" />
+                                        widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
                             </group>
                         </page>
                         <page string="Costos Financieros">
                             <field name="financial_ids" mode="tree">
                                 <tree editable="bottom">
                                     <field name="products_id"/>
-                                    <field name="unit_price"/>
-                                    <field name="currency_unit_price"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="currency_id2" column_invisible="1"/>
+                                    <field name="financial_rate" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    <field name="unit_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    <field name="currency_unit_price" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
                                 </tree>
                             </field>
                             <!-- CALCULOS AL FINAL DE LA PAGINA PARA LOS TOTALES -->
@@ -88,12 +98,12 @@
                                     <label for="total_price_financial"/>
                                 </div>
                                 <field name="total_price_financial" nolabel="1" class="oe_subtotal_footer_separator"
-                                        widget="monetary" />
+                                        widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
                                 <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                     <label for="total_currency_financial"/>
                                 </div>
                                 <field name="total_currency_financial" nolabel="1" class="oe_subtotal_footer_separator"
-                                        widget="monetary" />
+                                        widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}" />
                             </group>
                         </page>
                         <page string="Anexos">
