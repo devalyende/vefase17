@@ -100,7 +100,6 @@
                 <field name="partner_id"/>
                 <field name="estimated_date" widget="remaining_days"/>
                 <field name="limit_pay_date" widget="remaining_days"/>
-                <field name="balance"/>
             </tree>
         </field>
     </record>
