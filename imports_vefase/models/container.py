@@ -28,7 +28,7 @@ class Container(models.Model):
     total_currency_fiscal = fields.Float(string='Total $', compute='_compute_total_general', store=True, tracking=True)
     total_price_financial = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True, tracking=True)
     total_currency_financial = fields.Float(string='Total $', compute='_compute_total_general', store=True, tracking=True)
-    status = fields.Boolean("Disponibilidad", default=False, tracking=True)
+    status = fields.Boolean("Disponibilidad", default=False)
     currency_id = fields.Many2one('res.currency', string="Moneda", 
                                     default=lambda self: self.env.ref('base.VEF'), readonly=1)
     currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
