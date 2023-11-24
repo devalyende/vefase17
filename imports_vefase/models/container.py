@@ -28,10 +28,10 @@ class Container(models.Model):
     total_currency_fiscal = fields.Float(string='Total $', compute='_compute_total_general', store=True, tracking=True)
     total_price_financial = fields.Float(string='Total Bsf.', compute='_compute_total_general', store=True, tracking=True)
     total_currency_financial = fields.Float(string='Total $', compute='_compute_total_general', store=True, tracking=True)
-    status = fields.Boolean("Disponibilidad", default=False)
-    currency_id = fields.Many2one('res.currency', string="Moneda", 
+    status = fields.Boolean("Disponibilidad", default=False, tracking=True)
+    currency_id = fields.Many2one('res.currency', string="Moneda",
                                     default=lambda self: self.env.ref('base.VEF'), readonly=1)
-    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
+    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria",
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
 
     @api.depends('products_ids.total_price', 'products_ids.total_currency',
@@ -52,7 +52,7 @@ class Container(models.Model):
             fiscal_currency += rec.currency_unit_price
         for rec in self.financial_ids:
             financial_price += rec.unit_price
-            financial_currency += rec.currency_unit_price    
+            financial_currency += rec.currency_unit_price
         self.total_price = price
         self.total_currency = currency
         self.total_price_fiscal = fiscal_price
@@ -67,9 +67,9 @@ class ContainerLines(models.Model):
     _description = 'Productos del Contenedor'
     _rec_name = 'product_id'
 
-    currency_id = fields.Many2one('res.currency', string="Moneda", 
+    currency_id = fields.Many2one('res.currency', string="Moneda",
                                     default=lambda self: self.env.ref('base.VEF'), readonly=1)
-    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
+    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria",
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
     product_id = fields.Many2one('container.lines', 'Contenedor')
     product_qty = fields.Integer(string='Cantidad')
@@ -109,9 +109,9 @@ class ContainerFiscalLines(models.Model):
     _description = 'Gastos Fiscales del Contenedor'
     _rec_name = 'product_id'
 
-    currency_id = fields.Many2one('res.currency', string="Moneda", 
+    currency_id = fields.Many2one('res.currency', string="Moneda",
                                     default=lambda self: self.env.ref('base.VEF'), readonly=1)
-    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
+    currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria",
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
     product_id = fields.Many2one('container.lines', 'Contenedor')
     unit_price = fields.Float(string='Total en Bs.')
@@ -133,7 +133,7 @@ class ContainerFinancialLines(models.Model):
     _description = 'Gastos Financieros del Contenedor'
     _rec_name = 'product_id'
 
-    currency_id = fields.Many2one('res.currency', string="Moneda", 
+    currency_id = fields.Many2one('res.currency', string="Moneda",
                                     default=lambda self: self.env.ref('base.VEF'), readonly=1)
     currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
