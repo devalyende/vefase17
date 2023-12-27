@@ -1,5 +1,5 @@
-from odoo import models, fields, api
-
+from odoo import models, fields, api, _
+from odoo.exceptions import ValidationError
 
 class ImportsVefase(models.Model):
     _name = 'imports.vefase'
@@ -61,6 +61,8 @@ class ImportsVefase(models.Model):
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
     total_import = fields.Float(string="Total en Bs.", compute="_compute_total_import")
     total_import_rate = fields.Float(string="Total en $", compute="_compute_total_import")
+    total_pay = fields.Float(string="Total Abonado", tracking=True)
+    total_due = fields.Float(string="Total Adeudado", compute="_compute_total_due", readonly=1, tracking=True)
 
     def _expand_stages(self, states, domain, order):
         # return all stages
@@ -97,6 +99,15 @@ class ImportsVefase(models.Model):
             total_import_rate += rec.total_currency + rec.total_fiscal_rate + rec.total_financial_rate
         self.total_import = total_import
         self.total_import_rate = total_import_rate
+
+    @api.depends('total_pay', 'total_import_rate')
+    def _compute_total_due(self):
+        total_due = 0
+        total_due = self.total_import_rate - self.total_pay
+        # Validacion de Errores
+        if total_due < 0:
+            raise ValidationError(_('El monto pagado es mayor al monto restante, por favor verifique el monto y vuelva a intentarlo'))
+        self.total_due = total_due
 
 
 class ImportsLines(models.Model):

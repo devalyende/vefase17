@@ -37,6 +37,7 @@
                             <field name="estimated_date"/>
                             <field name="limit_pay_date"/>
                             <field name="account_ids"/>
+                            <field name="total_pay" widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="currency_id2" invisible="1"/>
                         </group>
@@ -80,6 +81,11 @@
                         </div>
                         <field name="total_import_rate" nolabel="1" class="oe_subtotal_footer_separator"
                                 widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}" />
+                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                            <label for="total_due"/>
+                        </div>
+                        <field name="total_due" nolabel="1" class="oe_subtotal_footer_separator"
+                                widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}" />
                     </group>   
                 </sheet>
                 <div class="oe_chatter">
@@ -100,6 +106,8 @@
                 <field name="partner_id"/>
                 <field name="estimated_date" widget="remaining_days"/>
                 <field name="limit_pay_date" widget="remaining_days"/>
+                <!-- <field name="total_import_rate" />
+                <field name="total_due" /> -->
             </tree>
         </field>
     </record>
