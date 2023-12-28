@@ -101,13 +101,12 @@
         <field name="model">imports.vefase</field>
         <field name="arch" type="xml">
             <tree string="Importaciones" name="Importaciones" >
-                <!-- <field name="bl_code" required="1"/> -->
+                <field name="currency_id2" column_invisible="1"/>
                 <field name="bl_code"/>
                 <field name="partner_id"/>
                 <field name="estimated_date" widget="remaining_days"/>
                 <field name="limit_pay_date" widget="remaining_days"/>
-                <!-- <field name="total_import_rate" />
-                <field name="total_due" /> -->
+                <field name="due_total"  widget="monetary" options="{'currency_field': 'currency_id2', 'field_digits': True}" />
             </tree>
         </field>
     </record>

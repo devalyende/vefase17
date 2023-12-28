@@ -63,7 +63,8 @@ class ImportsVefase(models.Model):
     total_import_rate = fields.Float(string="Total en $", compute="_compute_total_import")
     total_pay = fields.Float(string="Total Abonado", tracking=True)
     total_due = fields.Float(string="Total Adeudado", compute="_compute_total_due", readonly=1, tracking=True)
-
+    due_total = fields.Float(string="Total Adeudado", compute="_compute_due")
+    
     def _expand_stages(self, states, domain, order):
         # return all stages
         return [key for key, val in type(self).stage.selection]
@@ -108,6 +109,13 @@ class ImportsVefase(models.Model):
         if total_due < 0:
             raise ValidationError(_('El monto pagado es mayor al monto restante, por favor verifique el monto y vuelva a intentarlo'))
         self.total_due = total_due
+
+    @api.depends('total_due')
+    def _compute_due(self):
+        for rec in self:
+            due = self.env["imports.vefase"].search([("id", "=", rec.id)])
+            if due:
+                rec.due_total = due.total_due
 
 
 class ImportsLines(models.Model):
