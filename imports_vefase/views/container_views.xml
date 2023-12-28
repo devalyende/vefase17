@@ -119,6 +119,9 @@
                                 </page>
                             </notebook>
                         </page>
+                        <page name="Descripción" string="Descripción">
+                            <field name="description" />
+                        </page>
                     </notebook>
                     
                 </sheet>
