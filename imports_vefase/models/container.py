@@ -33,6 +33,7 @@ class Container(models.Model):
                                     default=lambda self: self.env.ref('base.VEF'), readonly=1)
     currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria",
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
+    description = fields.Html(string="Descripción del Contenedor")
 
     @api.depends('products_ids.total_price', 'products_ids.total_currency',
                 'fiscal_ids.unit_price', 'fiscal_ids.currency_unit_price',
@@ -73,8 +74,8 @@ class ContainerLines(models.Model):
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
     product_id = fields.Many2one('container.lines', 'Contenedor')
     product_qty = fields.Integer(string='Cantidad')
-    unit_price = fields.Float(string='Precio en Bs.')
-    currency_unit_price = fields.Float(string='Precio en $', compute="_compute_currency_unit_price")
+    unit_price = fields.Float(string='Precio en Bs.', compute="_compute_unit_price")
+    currency_unit_price = fields.Float(string='Precio en $')
     products_id = fields.Many2one(
                 'product.template',
                 string='Producto',
@@ -84,20 +85,20 @@ class ContainerLines(models.Model):
     total_price = fields.Float(string='Total en Bolivares', compute='_compute_total', store=True)
     total_currency = fields.Float(string='Total en $', compute='_compute_total_currency', store=True)
 
-    @api.depends('product_id.rate', 'unit_price')
-    def _compute_currency_unit_price(self):
+    @api.depends('product_id.rate', 'currency_unit_price')
+    def _compute_unit_price(self):
         for rec in self:
             if rec.product_id.rate:
-                rec.currency_unit_price = rec.unit_price / rec.product_id.rate
+                rec.unit_price = rec.currency_unit_price * rec.product_id.rate
             else:
-                rec.currency_unit_price = 0.0
+                rec.unit_price = 0.0
 
     @api.depends('product_qty', 'unit_price', 'currency_unit_price')
     def _compute_total(self):
         for rec in self:
             rec.total_price = rec.product_qty * rec.unit_price
 
-    @api.depends('product_qty', 'currency_unit_price')
+    @api.depends('product_qty', 'unit_price')
     def _compute_total_currency(self):
         for rec in self:
             rec.total_currency = rec.product_qty * rec.currency_unit_price
@@ -114,18 +115,18 @@ class ContainerFiscalLines(models.Model):
     currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria",
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
     product_id = fields.Many2one('container.lines', 'Contenedor')
-    unit_price = fields.Float(string='Total en Bs.')
+    unit_price = fields.Float(string='Total en Bs.', compute="_compute_fiscal_total")
     fiscal_rate = fields.Float(string='Tasa')
-    currency_unit_price = fields.Float(string='Total en $', compute="_compute_fiscal_total_rate")
+    currency_unit_price = fields.Float(string='Total en $')
     products_id = fields.Many2one('fiscal.expenses', string='Gastos Fiscal')
 
     @api.depends('fiscal_rate')
-    def _compute_fiscal_total_rate(self):
+    def _compute_fiscal_total(self):
         for rec in self:
             if rec.fiscal_rate:
-                rec.currency_unit_price = rec.unit_price / rec.fiscal_rate
+                rec.unit_price = rec.currency_unit_price * rec.fiscal_rate
             else:
-                rec.currency_unit_price = 0.0
+                rec.unit_price = 0.0
 
 
 class ContainerFinancialLines(models.Model):
@@ -138,15 +139,15 @@ class ContainerFinancialLines(models.Model):
     currency_id2 = fields.Many2one('res.currency', string="Moneda Secundaria", 
                                     default=lambda self: self.env.ref('base.USD'), readonly=1)
     product_id = fields.Many2one('container.lines', 'Contenedor')
-    unit_price = fields.Float(string='Total en Bs.')
+    unit_price = fields.Float(string='Total en Bs.', compute="_compute_financial_total")
     financial_rate = fields.Float(string='Tasa')
-    currency_unit_price = fields.Float(string='Total en $', compute="_compute_financial_total_rate")
+    currency_unit_price = fields.Float(string='Total en $')
     products_id = fields.Many2one('financial.expenses', string='Gastos Financieros')
 
     @api.depends('financial_rate')
-    def _compute_financial_total_rate(self):
+    def _compute_financial_total(self):
         for rec in self:
             if rec.financial_rate:
-                rec.currency_unit_price = rec.unit_price / rec.financial_rate
+                rec.unit_price = rec.currency_unit_price * rec.financial_rate
             else:
-                rec.currency_unit_price = 0.0
+                rec.unit_price = 0.0
